@@ -1,5 +1,7 @@
 using MediTrack.Application;
 using MediTrack.Infrastructure;
+using MediTrack.Infrastructure.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddSwaggerGen();
 //Add project dependency injection
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+
+//EF setup
+builder.Services.AddDbContext<MediTrackContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

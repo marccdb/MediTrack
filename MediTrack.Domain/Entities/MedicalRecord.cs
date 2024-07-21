@@ -8,10 +8,10 @@ namespace MediTrack.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        public Patient? PatientId { get; set; }
+        public Patient? Patient { get; set; }
 
         [Required]
-        public Physician? PhysicianId { get; set; }
+        public Physician? Physician { get; set; }
 
         [Required]
         public string? PatientName { get; set; }

@@ -15,7 +15,5 @@ namespace MediTrack.Infrastructure.Persistance
 
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
 
-
-
     }
 }

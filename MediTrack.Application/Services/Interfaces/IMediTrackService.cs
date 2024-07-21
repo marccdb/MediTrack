@@ -9,9 +9,9 @@ namespace MediTrack.Application.Services.Interfaces
 
         Task RegisterNewAsync(T entity);
 
-        Task UpdateExistingAsync(T entity);
+        Task UpdateExistingAsync(int id, T entity);
 
-        Task DeleteExistingAsync(T entity);
+        Task DeleteExistingAsync(int id);
 
     }
 }

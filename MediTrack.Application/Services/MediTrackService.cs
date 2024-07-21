@@ -1,8 +1,9 @@
-﻿using MediTrack.Infrastructure.Persistance.Interfaces;
+﻿using MediTrack.Application.Services.Interfaces;
+using MediTrack.Infrastructure.Persistance.Interfaces;
 
 namespace MediTrack.Application.Services
 {
-    public class MediTrackService<T>(IMediTrackRepo<T> mediTrackRepo) where T : class
+    public class MediTrackService<T>(IMediTrackRepo<T> mediTrackRepo) : IMediTrackService<T> where T : class
     {
         private readonly IMediTrackRepo<T> _mediTrackRepo = mediTrackRepo;
 

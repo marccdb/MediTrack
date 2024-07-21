@@ -5,7 +5,7 @@ namespace MediTrack.Application.Services.Interfaces
     {
         Task<IEnumerable<T>> GetAllDataAsync();
 
-        Task<T> GetDataByIdAsync();
+        Task<T> GetDataByIdAsync(int id);
 
         Task RegisterNewAsync(T entity);
 

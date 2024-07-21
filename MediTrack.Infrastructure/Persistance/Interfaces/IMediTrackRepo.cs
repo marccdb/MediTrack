@@ -1,19 +1,17 @@
 ﻿
 namespace MediTrack.Infrastructure.Persistance.Interfaces
 {
-    internal interface IMediTrackRepo<T> where T : class
+    public interface IMediTrackRepo<T> where T : class
     {
         Task<IEnumerable<T>> GetAllDataAsync();
 
-        Task<T> GetDataByIdAsync();
+        Task<T> GetDataByIdAsync(int id);
 
-        Task RegisterNewAsync(T entity);
+        Task CreateNewAsync(T entity);
 
         Task UpdateExistingAsync(T entity);
 
         Task DeleteExistingAsync(T entity);
-
-        void SaveAsync();
 
 
     }

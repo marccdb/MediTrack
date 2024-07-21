@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MediTrack.Domain\MediTrack.Domain.csproj" />
+    <ProjectReference Include="..\MediTrack.Infrastructure\MediTrack.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

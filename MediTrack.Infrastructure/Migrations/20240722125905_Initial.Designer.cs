@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(MediTrackContext))]
-    [Migration("20240722002801_fix-medicalrecord")]
-    partial class fixmedicalrecord
+    [Migration("20240722125905_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

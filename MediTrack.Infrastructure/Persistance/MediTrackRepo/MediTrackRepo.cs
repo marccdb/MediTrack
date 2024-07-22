@@ -33,10 +33,21 @@ namespace MediTrack.Infrastructure.Persistance.MediTrackRepo
             _context.SaveChanges();
         }
 
-        public async Task UpdateExistingAsync(T entity)
+        public async Task UpdateExistingAsync(int id, T entity)
         {
-            _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
+
+            _context.Entry(entity).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+
+                throw new DbUpdateConcurrencyException(ex.Message);
+            }
+
         }
     }
 }

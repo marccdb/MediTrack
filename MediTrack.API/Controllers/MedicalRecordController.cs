@@ -10,40 +10,116 @@ namespace MediTrack.API.Controllers
     {
         private readonly IMediTrackService<MedicalRecord>? _mediTrackService = mediTrackService;
 
-
         [HttpGet]
         public async Task<IActionResult> GetAllMedicalRecords()
         {
-            var data = await _mediTrackService.GetAllDataAsync();
-            return Ok(data);
+            if (_mediTrackService is null)
+            {
+                throw new Exception("Service not found");
+            }
+
+            try
+            {
+                var data = await _mediTrackService.GetAllDataAsync();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{e.Message}");
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMedicalRecordById(int id)
         {
-            var data = await _mediTrackService.GetDataByIdAsync(id);
-            return Ok(data);
+            if (_mediTrackService is null)
+            {
+                throw new Exception("Service not found");
+            }
+
+            try
+            {
+                var data = await _mediTrackService.GetDataByIdAsync(id);
+                if (data is null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{e.Message}");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateNewMedicalRecord(MedicalRecord medicalRecord)
         {
-            await _mediTrackService.RegisterNewAsync(medicalRecord);
-            return CreatedAtAction(nameof(GetMedicalRecordById), new { id = medicalRecord.Id }, medicalRecord);
+            if (_mediTrackService is null)
+            {
+                throw new Exception("Service not found");
+            }
+
+            try
+            {
+                await _mediTrackService.RegisterNewAsync(medicalRecord);
+                return CreatedAtAction(nameof(GetMedicalRecordById), new { id = medicalRecord.Id }, medicalRecord);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{e.Message}");
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMedicalRecord(int id, MedicalRecord medicalRecord)
         {
-            await _mediTrackService.UpdateExistingAsync(id, medicalRecord);
-            return CreatedAtAction(nameof(GetMedicalRecordById), new { id = medicalRecord.Id }, medicalRecord);
+
+            if (_mediTrackService is null)
+            {
+                throw new Exception("Service not found");
+            }
+
+            try
+            {
+                var data = await _mediTrackService.GetDataByIdAsync(id);
+                if (data is null)
+                {
+                    return NotFound();
+                }
+
+                await _mediTrackService.UpdateExistingAsync(id, medicalRecord);
+                return Created();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{e.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicalRecords(int id)
         {
-            await _mediTrackService.DeleteExistingAsync(id);
-            return Accepted();
+            if (_mediTrackService is null)
+            {
+                throw new Exception("Service not found");
+            }
+
+            try
+            {
+                var data = await _mediTrackService.GetDataByIdAsync(id);
+                if (data is null)
+                {
+                    return NotFound();
+                }
+                await _mediTrackService.DeleteExistingAsync(id);
+                return Accepted();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{e.Message}");
+            }
         }
 
 

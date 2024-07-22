@@ -59,7 +59,6 @@ namespace MediTrack.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     PhysicianId = table.Column<int>(type: "int", nullable: false),
-                    PatientName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SessionSummary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Paid = table.Column<bool>(type: "bit", nullable: false),
                     SessionDate = table.Column<DateTime>(type: "datetime2", nullable: false),

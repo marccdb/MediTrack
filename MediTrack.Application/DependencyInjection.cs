@@ -1,6 +1,7 @@
-﻿using MediTrack.Application.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MediTrack.Application.Services.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+using MediTrack.Application.Services;
+
 
 namespace MediTrack.Application
 {

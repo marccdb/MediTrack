@@ -9,33 +9,63 @@ namespace MediTrack.Application.Services
 
         public async Task<IEnumerable<T>> GetAllDataAsync()
         {
-            return await _mediTrackRepo.GetAllDataAsync();
-
+            try
+            {
+                return await _mediTrackRepo.GetAllDataAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public async Task<T> GetDataByIdAsync(int id)
         {
-            return await _mediTrackRepo.GetDataByIdAsync(id);
+            try
+            {
+                return await _mediTrackRepo.GetDataByIdAsync(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public async Task RegisterNewAsync(T entity)
         {
-            await _mediTrackRepo.CreateNewAsync(entity);
+            try
+            {
+                await _mediTrackRepo.CreateNewAsync(entity);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public async Task UpdateExistingAsync(int id, T entity)
         {
-            var entityToUpdate = await _mediTrackRepo.GetDataByIdAsync(id);
-            await _mediTrackRepo.UpdateExistingAsync(entity);
-
+            try
+            {
+                await _mediTrackRepo.UpdateExistingAsync(id, entity);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public async Task DeleteExistingAsync(int id)
         {
-            var entityToDelete = await _mediTrackRepo.GetDataByIdAsync(id);
-            await _mediTrackRepo.DeleteExistingAsync(entityToDelete);
+            try
+            {
+                var entityToDelete = await _mediTrackRepo.GetDataByIdAsync(id);
+                await _mediTrackRepo.DeleteExistingAsync(entityToDelete);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
-
-
     }
 }

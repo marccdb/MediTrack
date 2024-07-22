@@ -9,7 +9,7 @@ namespace MediTrack.Infrastructure.Persistance.Interfaces
 
         Task CreateNewAsync(T entity);
 
-        Task UpdateExistingAsync(T entity);
+        Task UpdateExistingAsync(int id, T entity);
 
         Task DeleteExistingAsync(T entity);
 

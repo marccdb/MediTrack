@@ -9,9 +9,10 @@ namespace MediTrack.Infrastructure.Persistance.MediTrackRepo
 
         private readonly MediTrackContext _context = context;
 
-        public Task DeleteExistingAsync(T entity)
+        public async Task DeleteExistingAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllDataAsync()

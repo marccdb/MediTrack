@@ -13,13 +13,10 @@ namespace MediTrack.Domain.Entities
         [Required]
         public Physician? Physician { get; set; }
 
-        [Required]
-        public string? PatientName { get; set; }
-
         public string? SessionSummary { get; set; }
 
         [Required]
-        public bool Paid { get; set; }
+        public bool Paid { get; set; } = false;
 
         [Required]
         public DateTime SessionDate { get; set; }

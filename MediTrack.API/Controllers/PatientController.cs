@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MediTrack.Application;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediTrack.API.Controllers
@@ -15,8 +16,8 @@ namespace MediTrack.API.Controllers
         {
             try
             {
-                var data = await _iSender.Send(new GetPatientQuery());
-                return Ok(data);
+                var response = await _iSender.Send(new GetPatientQuery());
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -48,8 +49,8 @@ namespace MediTrack.API.Controllers
         {
             try
             {
-                var patient = await _iSender.Send(command);
-                return Ok(patient);
+                var newPatient = await _iSender.Send(command);
+                return Created("Created successfully", newPatient);
             }
             catch (Exception e)
             {
@@ -58,18 +59,17 @@ namespace MediTrack.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePatient(UpdatePatientCommand command)
+        public async Task<IActionResult> UpdatePatient(int id, UpdatePatientCommand command)
         {
+            if (id != command.id)
+            {
+                return BadRequest();
+            }
+
             try
             {
-                var data = await _iSender.Send(command.patient.Id);
-                if (data is null)
-                {
-                    return NotFound();
-                }
-
-                await _iSender.Send(data);
-                return Created();
+                await _iSender.Send(command);
+                return NoContent();
             }
             catch (Exception e)
             {
@@ -82,14 +82,14 @@ namespace MediTrack.API.Controllers
         {
             try
             {
-                var data = await _iSender.Send(new GetPatientByIdQuery(id));
-                if (data is null)
+                var patientToBeDeleted = await _iSender.Send(new GetPatientByIdQuery(id));
+                if (patientToBeDeleted is null)
                 {
                     return NotFound();
                 }
 
-                await _iSender.Send(new DeletePatientCommand(data));
-                return Accepted();
+                await _iSender.Send(new DeletePatientCommand(patientToBeDeleted));
+                return NoContent();
             }
             catch (Exception e)
             {

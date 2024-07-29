@@ -19,6 +19,9 @@
   <ItemGroup>
     <Folder Include="MedicalRecord\Commands\" />
     <Folder Include="MedicalRecord\Queries\" />
+    <Folder Include="Patient\Commands\CreatePatient\" />
+    <Folder Include="Patient\Commands\DeletePatient\" />
+    <Folder Include="Patient\Commands\UpdatePatient\" />
     <Folder Include="Physician\Commands\" />
     <Folder Include="Physician\Queries\" />
   </ItemGroup>

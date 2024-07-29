@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using MediTrack.Application;
 using MediTrack.Infrastructure;
 using MediTrack.Infrastructure.Persistance;
@@ -19,8 +20,26 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
 //EF setup
-builder.Services.AddDbContext<MediTrackContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+//API versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version"));
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+
 
 var app = builder.Build();
 

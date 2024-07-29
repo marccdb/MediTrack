@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediTrack.Infrastructure.Persistance
 {
-    public class MediTrackContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
 
-        public MediTrackContext(DbContextOptions<MediTrackContext> options) : base(options) { }  
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }  
         
 
         public DbSet<Physician> Physicians { get; set; }

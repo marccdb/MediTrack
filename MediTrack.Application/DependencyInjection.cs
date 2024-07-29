@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MediTrack.Application.Services.Interfaces;
-using MediTrack.Application.Services;
 
 
 namespace MediTrack.Application
@@ -10,7 +8,7 @@ namespace MediTrack.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
 
-            services.AddScoped(typeof(IMediTrackService<>), typeof(MediTrackService<>));
+            services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
 
             return services;
         }

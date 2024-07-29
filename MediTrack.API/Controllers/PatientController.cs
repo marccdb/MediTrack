@@ -1,26 +1,21 @@
-﻿using MediTrack.Application.Services.Interfaces;
-using MediTrack.Domain.Entities;
+﻿using MediatR;
+using MediTrack.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediTrack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientController(IMediTrackService<Patient> mediTrackService) : ControllerBase
+    public class PatientController(ISender iSender) : ControllerBase
     {
-        private readonly IMediTrackService<Patient>? _mediTrackService = mediTrackService;
+        private readonly ISender _iSender = iSender;
 
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()
         {
-            if (_mediTrackService is null)
-            {
-                throw new Exception("Service not found");
-            }
-
             try
             {
-                var data = await _mediTrackService.GetAllDataAsync();
+                var data = await _iSender.Send(new GetPatientQuery());
                 return Ok(data);
             }
             catch (Exception e)
@@ -32,20 +27,15 @@ namespace MediTrack.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPatientById(int id)
         {
-            if (_mediTrackService is null)
-            {
-                throw new Exception("Service not found");
-            }
-
             try
             {
-                var data = await _mediTrackService.GetDataByIdAsync(id);
-                if (data is null)
+                var response = await _iSender.Send(new GetPatientByIdQuery(id));
+                if (response is null)
                 {
                     return NotFound();
                 }
 
-                return Ok(data);
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -54,17 +44,12 @@ namespace MediTrack.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewPatient(Patient patient)
+        public async Task<IActionResult> CreateNewPatient(CreatePatientCommand command)
         {
-            if (_mediTrackService is null)
-            {
-                throw new Exception("Service not found");
-            }
-
             try
             {
-                await _mediTrackService.RegisterNewAsync(patient);
-                return CreatedAtAction(nameof(GetPatientById), new { id = patient.Id }, patient);
+                var patient = await _iSender.Send(command);
+                return Ok(patient);
             }
             catch (Exception e)
             {
@@ -73,23 +58,17 @@ namespace MediTrack.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePatient(int id, Patient patient)
+        public async Task<IActionResult> UpdatePatient(UpdatePatientCommand command)
         {
-
-            if (_mediTrackService is null)
-            {
-                throw new Exception("Service not found");
-            }
-
             try
             {
-                var data = await _mediTrackService.GetDataByIdAsync(id);
+                var data = await _iSender.Send(command.patient.Id);
                 if (data is null)
                 {
                     return NotFound();
                 }
 
-                await _mediTrackService.UpdateExistingAsync(id, patient);
+                await _iSender.Send(data);
                 return Created();
             }
             catch (Exception e)
@@ -101,19 +80,15 @@ namespace MediTrack.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {
-            if (_mediTrackService is null)
-            {
-                throw new Exception("Service not found");
-            }
-
             try
             {
-                var data = await _mediTrackService.GetDataByIdAsync(id);
+                var data = await _iSender.Send(new GetPatientByIdQuery(id));
                 if (data is null)
                 {
                     return NotFound();
                 }
-                await _mediTrackService.DeleteExistingAsync(id);
+
+                await _iSender.Send(new DeletePatientCommand(data));
                 return Accepted();
             }
             catch (Exception e)

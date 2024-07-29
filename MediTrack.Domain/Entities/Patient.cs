@@ -9,14 +9,16 @@ namespace MediTrack.Domain.Entities
 
         [Required]
         public string? FirstName { get; set; }
+
         [Required]
-        public string? LastNameName { get; set; }
+        public string? LastName { get; set; }
 
         public DateOnly BirthDate { get; set; }
 
         public string? Address { get; set; }
 
         public string? Profession { get; set; }
+
         [Required]
         public string? Phone { get; set; }
 

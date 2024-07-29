@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediTrack.Domain.Entities
 {
@@ -8,10 +9,12 @@ namespace MediTrack.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        public Patient? Patient { get; set; }
+        [ForeignKey("PatientId")]
+        public int PatientId { get; set; }
 
         [Required]
-        public Physician? Physician { get; set; }
+        [ForeignKey("PhysicianId")]
+        public int PhysicianId { get; set; }
 
         public string? SessionSummary { get; set; }
 
@@ -19,7 +22,7 @@ namespace MediTrack.Domain.Entities
         public bool Paid { get; set; } = false;
 
         [Required]
-        public DateTime SessionDate { get; set; }
+        public DateTime SessionDate { get; set; } = DateTime.Now;
 
         public string? Comments { get; set; }
 

@@ -13,7 +13,7 @@ namespace MediTrack.Domain.Entities
         [Required]
         public string? LastName { get; set; }
 
-        public DateOnly BirthDate { get; set; }
+        public DateOnly BirthDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public string? Address { get; set; }
 
@@ -23,6 +23,7 @@ namespace MediTrack.Domain.Entities
         public string? Phone { get; set; }
 
         public string? Email { get; set; }
+
         [Required]
         public string? Document { get; set; }
     }

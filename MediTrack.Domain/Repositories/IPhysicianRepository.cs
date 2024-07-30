@@ -10,7 +10,7 @@ namespace MediTrack.Domain.Repositories
 
         Task CreateNewAsync(Physician physician);
 
-        Task UpdateExistingAsync(int id, Physician physician);
+        Task<int> UpdateExistingAsync(int id, Physician physician);
 
         Task DeleteExistingAsync(Physician physician);
     }

@@ -4,7 +4,7 @@ using MediTrack.Domain.Repositories;
 
 namespace MediTrack.Application;
 
-public class GetPlayerByIdQueryHandler(IPatientRepository patientRepository) : IRequestHandler<GetPatientByIdQuery, Patient?>
+public class GetPatientByIdQueryHandler(IPatientRepository patientRepository) : IRequestHandler<GetPatientByIdQuery, Patient?>
 {
 
     private readonly IPatientRepository _patientRepository = patientRepository;

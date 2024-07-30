@@ -32,21 +32,18 @@ namespace MediTrack.Infrastructure.Persistance.Repositories
             _context.SaveChanges();
         }
 
-        public async Task UpdateExistingAsync(int id, Physician physician)
+        public async Task<int> UpdateExistingAsync(int id, Physician physician)
         {
-
-            _context.Entry(physician).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-
-                throw new DbUpdateConcurrencyException(ex.Message);
-            }
-
+            return await _context.Physicians.Where(model => model.Id == id)
+            .ExecuteUpdateAsync(entity => entity
+            .SetProperty(p => p.FirstName, physician.FirstName)
+            .SetProperty(p => p.LastName, physician.LastName)
+            .SetProperty(p => p.BirthDate, physician.BirthDate)
+            .SetProperty(p => p.Address, physician.Address)
+            .SetProperty(p => p.Phone, physician.Phone)
+            .SetProperty(p => p.Email, physician.Email)
+            .SetProperty(p => p.Document, physician.Document)
+            .SetProperty(p => p.CRM, physician.CRM));
         }
     }
 }

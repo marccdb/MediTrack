@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MediTrack.API\MediTrack.API.csproj" />
+    <ProjectReference Include="..\MediTrack.Presentation\MediTrack.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

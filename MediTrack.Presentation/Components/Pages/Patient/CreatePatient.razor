@@ -1,0 +1,84 @@
+﻿@page "/patients/create-patient"
+@using MediTrack.Presentation.DTOs
+
+<style>
+
+    header {
+        background-color: #fe6d73;
+        text-align: center;
+    }
+
+    h4 {
+        height: 100px;
+        color: white;
+        align-content: center
+    }
+</style>
+
+<header>
+    <h4>Add new patient</h4>
+</header>
+
+<div class="container-fluid">
+    <EditForm Model="patientDTO" FormName="create-patient">
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="first-name">First Name</label>
+            <input @bind=patientDTO.FirstName class="form-control" type="text" name="first-name" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="last-name">Last Name</label>
+            <input @bind=patientDTO.LastName class="form-control" type="text" name="last-name" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="birthdate">Birth Date</label>
+            <input @bind=patientDTO.BirthDate class="form-control" type="date" name="birthdate" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="address">Address</label>
+            <input @bind=patientDTO.Address class="form-control" type="text" name="address" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="profession">Profession</label>
+            <input @bind=patientDTO.Profession class="form-control" type="text" name="profession" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="phone">Phone</label>
+            <input @bind=patientDTO.Phone class="form-control" type="text" name="phone" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="email">Email</label>
+            <input @bind=patientDTO.Email class="form-control" type="email" name="email" />
+        </div>
+
+        <div class="mb-3 col-lg-2">
+            <label class="form-label" for="document">Document</label>
+            <input @bind=patientDTO.Document class="form-control" type="text" name="document" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Send</button>
+    </EditForm>
+</div>
+
+
+@code {
+    PatientDTO? patientDTO = new();
+
+    PatientViewModel _vm = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = _vm.RetrievePatientList();
+
+
+
+    }
+
+}
